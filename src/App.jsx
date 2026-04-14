@@ -8,6 +8,9 @@ import { Button } from "./components/Button";
 import { Input } from "./components/input";
 import { Card } from "./components/Card";
 import { Badge } from "./components/Badge";
+import { Typography } from "./components/Typography";
+import { Flex } from "./components/Flex";
+import { Container } from "./components/Container";
 
 function App() {
   const [isDark, setIsDark] = useState(false);
@@ -16,27 +19,48 @@ function App() {
     <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
       <GlobalStyle />
 
-      <div style={{ padding: "2rem" }}>
-        {/* ✅ FIXED BUTTON */}
+      <Container>
+        {/* 🔘 THEME TOGGLE */}
         <Button onClick={() => setIsDark(!isDark)}>
           Toggle Theme
         </Button>
 
+        {/* 📦 CARD */}
         <Card style={{ marginTop: "2rem" }}>
-          <h2>Design System</h2>
+          
+          {/* 🧠 TYPOGRAPHY */}
+          <Typography variant="h1">
+            Design System
+          </Typography>
 
+          <Typography
+            variant="body"
+            style={{ marginTop: "1rem" }}
+          >
+            This is a scalable design system using styled-components.
+          </Typography>
+
+          {/* 🧾 INPUT */}
           <Input
             placeholder="Type something..."
             style={{ marginTop: "1rem" }}
           />
 
-          <Badge
-            style={{ marginTop: "1rem", display: "block" }}
-          >
+          {/* 🔘 BUTTON VARIANTS */}
+          <Flex gap="1rem" style={{ marginTop: "1rem" }}>
+            <Button>Primary</Button>
+            <Button variant="outline">Outline</Button>
+            <Button variant="ghost">Ghost</Button>
+            <Button size="small">Small</Button>
+            <Button size="large">Large</Button>
+          </Flex>
+
+          {/* 🏷️ BADGE */}
+          <Badge style={{ marginTop: "1rem" }}>
             Active
           </Badge>
         </Card>
-      </div>
+      </Container>
     </ThemeProvider>
   );
 }
