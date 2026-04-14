@@ -1,66 +1,114 @@
 import { useState } from "react";
 import { ThemeProvider } from "styled-components";
-
-import { GlobalStyle } from "./theme/GlobalStyle";
 import { lightTheme, darkTheme } from "./theme/theme";
+import { GlobalStyle } from "./theme/GlobalStyle";
 
 import { Button } from "./components/Button";
 import { Input } from "./components/input";
 import { Card } from "./components/Card";
-import { Badge } from "./components/Badge";
 import { Typography } from "./components/Typography";
+import { Box } from "./components/Box";
 import { Flex } from "./components/Flex";
-import { Container } from "./components/Container";
 
 function App() {
   const [isDark, setIsDark] = useState(false);
+  const [active, setActive] = useState("button");
+
+  const renderComponent = () => {
+    switch (active) {
+      case "button":
+        return (
+          <Flex gap="sm">
+            <Button>Primary</Button>
+            <Button variant="outline">Outline</Button>
+          </Flex>
+        );
+
+      case "input":
+        return (
+          <Box style={{ width: "100%" }}>
+            <Input placeholder="Type here..." />
+            <Input
+              error
+              placeholder="Error input"
+              style={{ marginTop: "1rem" }}
+            />
+          </Box>
+        );
+
+      case "card":
+        return (
+          <Card style={{ width: "300px" }}>
+            <Typography variant="h3">Card Title</Typography>
+            <Typography variant="body" style={{ marginTop: "1rem" }}>
+              This is a reusable card component.
+            </Typography>
+          </Card>
+        );
+
+      case "typography":
+        return (
+          <Box>
+            <Typography variant="h1">Heading 1</Typography>
+            <Typography variant="h2">Heading 2</Typography>
+            <Typography variant="body">
+              This is body text
+            </Typography>
+          </Box>
+        );
+
+      default:
+        return <div>Select component</div>;
+    }
+  };
 
   return (
     <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
       <GlobalStyle />
 
-      <Container>
-        {/* 🔘 THEME TOGGLE */}
-        <Button onClick={() => setIsDark(!isDark)}>
-          Toggle Theme
-        </Button>
+      <Flex style={{ height: "100vh" }}>
+        {/* Sidebar */}
+        <Box
+          bg={isDark ? "#1f2937" : "#ffffff"}
+          style={{
+            width: "250px",
+            borderRight: "1px solid #e5e7eb",
+            padding: "1rem",
+          }}
+        >
+          <Typography variant="h3">Components</Typography>
 
-        {/* 📦 CARD */}
-        <Card style={{ marginTop: "2rem" }}>
-          
-          {/* 🧠 TYPOGRAPHY */}
-          <Typography variant="h1">
-            Design System
-          </Typography>
+          <Box style={{ marginTop: "1rem" }}>
+            <div onClick={() => setActive("button")}>Button</div>
+            <div onClick={() => setActive("input")}>Input</div>
+            <div onClick={() => setActive("card")}>Card</div>
+            <div onClick={() => setActive("typography")}>
+              Typography
+            </div>
+          </Box>
 
-          <Typography
-            variant="body"
-            style={{ marginTop: "1rem" }}
+          <Button
+            style={{ marginTop: "2rem" }}
+            onClick={() => setIsDark(!isDark)}
           >
-            This is a scalable design system using styled-components.
-          </Typography>
+            Toggle {isDark ? "Light" : "Dark"}
+          </Button>
+        </Box>
 
-          {/* 🧾 INPUT */}
-          <Input
-            placeholder="Type something..."
-            style={{ marginTop: "1rem" }}
-          />
-
-          {/* 🔘 BUTTON VARIANTS */}
-          <Flex gap="1rem" style={{ marginTop: "1rem" }}>
-            <Button>Primary</Button>
-            <Button variant="outline">Outline</Button>
-            <Button variant="ghost">Ghost</Button>
-            <Button size="small">Small</Button>
-            <Button size="large">Large</Button>
-          </Flex>
-
-          {/* 🏷️ BADGE */}
-          <Badge style={{ marginTop: "1rem" }}>
-            Active
-          </Badge>
-        </Card>
-      </Container>
+        {/* Preview Area */}
+        <Box
+          bg={isDark ? "#111827" : "#f9fafb"}
+          style={{
+            flex: 1,
+            padding: "2rem",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          {renderComponent()}
+        </Box>
+      </Flex>
     </ThemeProvider>
   );
 }
