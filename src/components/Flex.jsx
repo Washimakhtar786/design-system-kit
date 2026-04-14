@@ -7,5 +7,5 @@ export const Flex = styled.div`
   align-items: ${({ align }) => align || "stretch"};
   flex-direction: ${({ direction }) => direction || "row"};
 
-  gap: ${({ gap }) => gap || "0"};
+  gap: ${({ gap, theme }) => theme.spacing[gap] || gap || 0};
 `;
