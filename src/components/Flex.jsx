@@ -2,7 +2,10 @@ import styled from "styled-components";
 
 export const Flex = styled.div`
   display: flex;
-  align-items: ${({ align }) => align || "center"};
+
   justify-content: ${({ justify }) => justify || "flex-start"};
-  gap: ${({ gap }) => gap || "1rem"};
+  align-items: ${({ align }) => align || "stretch"};
+  flex-direction: ${({ direction }) => direction || "row"};
+
+  gap: ${({ gap }) => gap || "0"};
 `;
